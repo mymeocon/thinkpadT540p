@@ -1,2 +1,0 @@
-[console_scripts]
-music-transpose = music_transpose.cli:main
