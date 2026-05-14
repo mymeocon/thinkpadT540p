@@ -240,3 +240,28 @@ class TestTransposeChordChart:
         assert "Bm" in result
         assert "Walking down the road" in result
         assert "Singing out loud" in result
+
+    def test_lyrics_with_note_letter_words_not_corrupted(self):
+        chart = "Am  G  F  G\nBlue Eyes\nC  F  G\nCome And Go"
+        result = transpose_chord_chart(chart, semitones=2)
+        lines = result.split("\n")
+        assert "Bm" in lines[0]
+        assert lines[1] == "Blue Eyes"
+        assert "D" in lines[2]
+        assert lines[3] == "Come And Go"
+
+    def test_single_word_lyrics_starting_with_note(self):
+        chart = "Am  G\nA man walked down the road"
+        result = transpose_chord_chart(chart, semitones=2)
+        lines = result.split("\n")
+        assert "Bm" in lines[0]
+        assert lines[1] == "A man walked down the road"
+
+    def test_all_valid_chord_qualities_still_parse(self):
+        valid_chords = [
+            "C", "Am", "F#m7", "Bbmaj7", "Bdim", "Gaug",
+            "Dsus4", "Asus2", "Dm9", "G7", "Cadd9", "F#m7b5",
+        ]
+        for chord_str in valid_chords:
+            result = transpose_chord(chord_str, 0)
+            assert result == chord_str, f"Chord {chord_str} should round-trip"

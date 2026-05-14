@@ -38,8 +38,16 @@ MAJOR_SCALE_INTERVALS = [0, 2, 4, 5, 7, 9, 11]
 MINOR_SCALE_INTERVALS = [0, 2, 3, 5, 7, 8, 10]
 
 # Regex to parse a chord symbol: root note + optional quality/extensions
+# The quality group is restricted to valid chord suffixes to avoid matching
+# English words like "Blue", "Come", "And", etc.
 CHORD_PATTERN = re.compile(
-    r"^([A-G][#b]?)(.*?)(/([A-G][#b]?))?$"
+    r"^([A-G][#b]?)"
+    r"((?:maj|min|m|M|dim|aug|sus|add|no)?"
+    r"(?:[0-9]+)?"
+    r"(?:[#b][0-9]+)*"
+    r"(?:sus[24])?"
+    r"(?:add[0-9]+)?)"
+    r"(/([A-G][#b]?))?$"
 )
 
 
