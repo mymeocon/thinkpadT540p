@@ -1,0 +1,106 @@
+Metadata-Version: 2.4
+Name: music-transpose
+Version: 0.1.0
+Summary: A comprehensive music transposition library for notes, chords, keys, and guitar chord charts
+Author: Phillips Mai
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0; extra == "dev"
+Requires-Dist: ruff>=0.4; extra == "dev"
+
+# music-transpose
+
+A comprehensive Python library and CLI tool for transposing musical notes, chords, keys, and guitar chord charts.
+
+## Features
+
+- **Note transposition** — Shift any note up or down by semitones
+- **Chord transposition** — Transpose chord symbols (Am7, F#dim, C/G, etc.)
+- **Key-based transposition** — Convert chords from one key to another (e.g., C major → G major)
+- **Chord chart transposition** — Transpose entire chord charts with lyrics, preserving formatting
+
+## Installation
+
+```bash
+pip install -e .
+```
+
+For development:
+
+```bash
+pip install -e ".[dev]"
+```
+
+## Usage
+
+### Python API
+
+```python
+from music_transpose import transpose_note, transpose_chord, transpose_to_key, transpose_chord_chart
+
+# Transpose a note by semitones
+transpose_note("C", 2)          # → "D"
+transpose_note("A", 3)          # → "C"
+transpose_note("G", 1, use_flats=True)  # → "Ab"
+
+# Transpose a chord by semitones
+transpose_chord("Am7", 2)       # → "Bm7"
+transpose_chord("G7", 3, use_flats=True)  # → "Bb7"
+transpose_chord("C/G", 5)       # → "F/C"
+
+# Transpose chords from one key to another
+transpose_to_key(["C", "Am", "F", "G"], from_key="C", to_key="G")
+# → ["G", "Em", "C", "D"]
+
+# Transpose an entire chord chart
+chart = """Am  G  F  G
+Some lyrics here
+C  F  G  Am
+More lyrics"""
+transpose_chord_chart(chart, semitones=2)
+# Shifts everything up 2 semitones
+
+transpose_chord_chart(chart, from_key="Am", to_key="Em")
+# Transposes from A minor to E minor
+```
+
+### CLI
+
+```bash
+# Transpose a note
+music-transpose note C 2           # → D
+music-transpose note G 1 --flats   # → Ab
+
+# Transpose a chord
+music-transpose chord Am7 2        # → Bm7
+music-transpose chord G7 3 --flats # → Bb7
+
+# Transpose chords between keys
+music-transpose key --from C --to G C Am F G   # → G Em C D
+
+# Transpose a chord chart (reads from stdin)
+cat song.txt | music-transpose chart -s 2
+cat song.txt | music-transpose chart --key Am Em
+```
+
+## Supported Chord Formats
+
+- Basic triads: `C`, `Am`, `F#`
+- Seventh chords: `G7`, `Cmaj7`, `Am7`, `Bdim7`
+- Extended chords: `Dm9`, `G13`
+- Altered chords: `C#m7b5`, `Gaug`
+- Suspended chords: `Dsus2`, `Asus4`
+- Slash chords: `C/G`, `Am/E`, `D/F#`
+- Flat/sharp roots: `Bb`, `F#`, `Eb`, `Ab`
+
+## Running Tests
+
+```bash
+pytest
+```
+
+## License
+
+MIT

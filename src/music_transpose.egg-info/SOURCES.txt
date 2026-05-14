@@ -1,0 +1,12 @@
+README.md
+pyproject.toml
+src/music_transpose/__init__.py
+src/music_transpose/cli.py
+src/music_transpose/core.py
+src/music_transpose.egg-info/PKG-INFO
+src/music_transpose.egg-info/SOURCES.txt
+src/music_transpose.egg-info/dependency_links.txt
+src/music_transpose.egg-info/entry_points.txt
+src/music_transpose.egg-info/requires.txt
+src/music_transpose.egg-info/top_level.txt
+tests/test_core.py
